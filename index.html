@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fricción Cero — Dinero Mental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #F2F0EB;
+  --surface: #FFFFFF;
+  --surface2: #E8E5DE;
+  --border: rgba(0,0,0,0.09);
+  --border-md: rgba(0,0,0,0.16);
+  --text: #1C1B18;
+  --text-muted: #6B6960;
+  --text-hint: #A09D95;
+  --ink: #1C1B18;
+  --accent: #C84B1A;
+  --accent-bg: #FBF0EB;
+  --accent-text: #9B3610;
+  --blue: #185FA5;
+  --blue-bg: #EAF2FB;
+  --blue-text: #0C447C;
+  --green: #2D6A0F;
+  --green-bg: #EAF4E0;
+  --green-text: #1E4D09;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 18px;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+}
+body.dark {
+  --bg: #181714;
+  --surface: #222220;
+  --surface2: #2A2A27;
+  --border: rgba(255,255,255,0.08);
+  --border-md: rgba(255,255,255,0.15);
+  --text: #F0EDE6;
+  --text-muted: #9A9790;
+  --text-hint: #6B6960;
+  --ink: #F0EDE6;
+  --accent: #E06030;
+  --accent-bg: #2A1A10;
+  --accent-text: #F0956A;
+  --blue: #4A9FE0;
+  --blue-bg: #0C2A47;
+  --blue-text: #8EC5F0;
+  --green: #7DC44A;
+  --green-bg: #152208;
+  --green-text: #AADB7A;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background 0.2s, color 0.2s;
+}
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 5rem;
+}
+
+/* HEADER */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+  width: 40px; height: 40px;
+  background: var(--ink);
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--bg);
+  letter-spacing: -0.3px;
+}
+.logo-info strong { font-family: var(--font-display); font-size: 16px; font-weight: 600; display: block; }
+.logo-info span { font-size: 12px; color: var(--text-muted); }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.icon-btn {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border-md);
+  border-radius: var(--r-md);
+  background: none; cursor: pointer;
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  transition: background 0.15s, color 0.15s;
+}
+.icon-btn:hover { background: var(--surface2); color: var(--text); }
+
+/* TABS */
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow);
+}
+.tab-btn {
+  padding: 12px 10px;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 500;
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  transition: background 0.15s, color 0.15s;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn i { font-size: 18px; }
+.tab-btn.active {
+  background: var(--surface2);
+  color: var(--text);
+  font-weight: 600;
+}
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 20%; right: 20%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px 2px 0 0;
+}
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.15s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: 8px;
+  color: var(--text);
+}
+.card-title i { font-size: 19px; color: var(--text-muted); }
+
+/* AREAS GRID */
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+.area-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 13px 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.area-card:hover { border-color: var(--border-md); background: var(--surface2); }
+.area-card.selected { border-color: var(--accent); background: var(--accent-bg); }
+.area-card i { font-size: 20px; display: block; margin-bottom: 7px; color: var(--text-hint); }
+.area-card.selected i { color: var(--accent); }
+.area-card .an { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.2; }
+.area-card .ah { font-size: 11px; color: var(--text-hint); margin-top: 2px; }
+.area-card.selected .an { color: var(--accent-text); }
+.area-card.selected .ah { color: var(--accent); }
+
+/* FORM */
+.field { margin-bottom: 12px; }
+.field:last-child { margin-bottom: 0; }
+.field-label { font-size: 12px; color: var(--text-muted); margin-bottom: 5px; font-weight: 500; }
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+input[type=text], input[type=number], select, textarea {
+  width: 100%; padding: 9px 11px;
+  border: 1px solid var(--border-md);
+  border-radius: var(--r-md);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-family: var(--font-body);
+  transition: border-color 0.15s;
+  -webkit-appearance: auto;
+  appearance: auto;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
+
+/* BUTTONS */
+.btn {
+  padding: 10px 18px;
+  font-size: 14px; font-weight: 500;
+  border: 1px solid var(--border-md);
+  border-radius: var(--r-md);
+  background: none; color: var(--text);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 7px;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--surface2); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-text); border-color: var(--accent-text); color: #fff; }
+.btn-full { width: 100%; justify-content: center; }
+.btn-sm { padding: 7px 13px; font-size: 13px; }
+.btn-green { background: var(--green); border-color: var(--green); color: #fff; }
+.btn-green:hover { opacity: 0.9; }
+
+/* NAV */
+.nav-row { display: flex; align-items: center; justify-content: space-between; margin-top: 1.25rem; }
+.step-pill {
+  font-size: 13px; color: var(--text-muted);
+  background: var(--surface2);
+  padding: 5px 14px; border-radius: 100px;
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+
+/* RESULT */
+.result-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.result-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--text-hint);
+  margin-bottom: 1rem;
+}
+.result-content { font-size: 14px; line-height: 1.8; color: var(--text); }
+.result-content .area-block { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.result-content .area-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.result-content .area-heading {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: var(--accent-text);
+  margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.result-content .area-heading::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.result-content .line { margin-bottom: 4px; }
+.result-content .line-label { font-weight: 600; color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+.result-actions { display: flex; gap: 8px; margin-top: 1.25rem; flex-wrap: wrap; }
+
+/* LOADING */
+.loading-state { display: flex; align-items: center; gap: 12px; color: var(--text-muted); font-size: 14px; padding: 0.5rem 0; }
+.dots { display: flex; gap: 5px; }
+.dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s infinite; }
+.dots span:nth-child(2) { animation-delay: .2s; }
+.dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes pulse { 0%,80%,100%{opacity:0.3;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
+
+/* ESTRATEGIAS */
+.cat-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+.cat-pill {
+  padding: 7px 14px; font-size: 13px; font-weight: 500;
+  border: 1px solid var(--border-md);
+  border-radius: 100px;
+  background: none; color: var(--text-muted);
+  cursor: pointer; transition: all 0.15s;
+  font-family: var(--font-body);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.cat-pill i { font-size: 16px; }
+.cat-pill:hover { border-color: var(--accent); color: var(--accent-text); }
+.cat-pill.active { background: var(--accent-bg); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+
+.strat-output {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.strat-header {
+  padding: 1rem 1.5rem;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.strat-header-title { font-family: var(--font-display); font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 7px; }
+.strat-header-title i { font-size: 18px; color: var(--accent); }
+.strat-body { padding: 1.5rem; }
+.strat-section { margin-bottom: 1.5rem; }
+.strat-section:last-child { margin-bottom: 0; }
+.strat-section-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.strat-section-title i { font-size: 15px; }
+.strat-tips { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.strat-tip {
+  display: flex; gap: 10px;
+  font-size: 14px; line-height: 1.6; color: var(--text);
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+}
+.strat-tip-num {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 700;
+  color: var(--accent);
+  min-width: 20px;
+  padding-top: 1px;
+}
+.strat-context-label { font-size: 12px; color: var(--text-hint); margin-bottom: 0.75rem; }
+.strat-context-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+.strat-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+.ai-enrich-box {
+  background: var(--blue-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1rem 1.25rem;
+  margin-top: 1.25rem;
+}
+.ai-enrich-label { font-size: 12px; color: var(--blue-text); font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 5px; }
+.ai-enrich-content { font-size: 13px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
+
+/* CHECKLIST */
+.checklist { display: flex; flex-direction: column; gap: 10px; }
+.check-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 1rem 1.25rem;
+  display: flex; gap: 12px; align-items: flex-start;
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s, background 0.15s;
+}
+.check-item.done { border-color: var(--green); background: var(--green-bg); }
+.checkbox {
+  width: 22px; height: 22px; min-width: 22px;
+  border: 1.5px solid var(--border-md);
+  border-radius: 6px;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s;
+  margin-top: 1px;
+}
+.check-item.done .checkbox { background: var(--green); border-color: var(--green); color: #fff; }
+.check-body { flex: 1; min-width: 0; }
+.check-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; cursor: pointer; }
+.check-item.done .check-title { color: var(--green-text); }
+.check-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.check-item.done .check-desc { color: var(--green); opacity: 0.8; }
+.check-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; min-width: 110px; }
+.saving-label { font-size: 11px; color: var(--text-hint); text-align: right; margin-bottom: 2px; }
+.saving-input-wrap { position: relative; }
+.saving-input {
+  width: 106px !important;
+  text-align: right;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--green-text) !important;
+  background: var(--green-bg) !important;
+  border-color: var(--green) !important;
+  padding-right: 24px !important;
+  border-radius: var(--r-md) !important;
+}
+.saving-input:focus { outline: none; box-shadow: 0 0 0 3px var(--green-bg); }
+.saving-currency {
+  position: absolute; right: 9px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px; font-weight: 600; color: var(--green-text);
+  pointer-events: none;
+}
+.check-item.done .saving-input { opacity: 1; }
+
+/* PROGRESS */
+.progress-wrap { margin-bottom: 1.5rem; }
+.progress-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 7px;
+}
+.progress-meta span { font-size: 13px; color: var(--text-muted); }
+.progress-meta strong { font-size: 13px; font-weight: 600; color: var(--text); }
+.progress-track {
+  height: 7px; background: var(--surface2);
+  border-radius: 4px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--green), #5BAD2A);
+  border-radius: 4px;
+  transition: width 0.45s cubic-bezier(.4,0,.2,1);
+  width: 0%;
+}
+
+/* TOTAL */
+.total-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.total-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+.total-amount { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--green-text); }
+.total-icon { font-size: 38px; color: var(--text-hint); }
+
+.celebrate {
+  background: var(--green-bg);
+  border: 1px solid var(--green);
+  border-radius: var(--r-xl);
+  padding: 1.5rem;
+  text-align: center;
+  margin-top: 1rem;
+  display: none;
+}
+.celebrate i { font-size: 34px; display: block; margin-bottom: 8px; color: var(--green); }
+.celebrate strong { color: var(--green-text); font-family: var(--font-display); font-size: 16px; }
+.celebrate p { color: var(--green-text); font-size: 13px; margin-top: 5px; opacity: 0.85; }
+
+/* RESPONSIVE */
+@media (max-width: 520px) {
+  .areas-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-grid-2, .strat-context-fields { grid-template-columns: 1fr; }
+  .check-right { min-width: 90px; }
+  .saving-input { width: 90px !important; }
+  .tab-btn .tab-label { display: none; }
+  .total-amount { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-mark">DM</div>
+      <div class="logo-info">
+        <strong>Fricción Cero</strong>
+        <span>Herramienta del vídeo #2 · Dinero Mental</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="toggleDark()" title="Cambiar tema" id="theme-btn">
+        <i class="ti ti-moon" id="theme-icon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-diagnostico" onclick="switchTab('diagnostico')">
+      <i class="ti ti-search"></i><span class="tab-label">Diagnóstico</span>
+    </button>
+    <button class="tab-btn" id="tab-estrategias" onclick="switchTab('estrategias')">
+      <i class="ti ti-bulb"></i><span class="tab-label">Estrategias</span>
+    </button>
+    <button class="tab-btn" id="tab-checklist" onclick="switchTab('checklist')">
+      <i class="ti ti-checklist"></i><span class="tab-label">Checklist</span>
+    </button>
+  </div>
+
+  <!-- ═══════════════════ DIAGNÓSTICO ═══════════════════ -->
+  <div class="panel active" id="panel-diagnostico">
+
+    <div id="diag-selector">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-layout-grid"></i> ¿Qué áreas quieres revisar?</div>
+        <div class="areas-grid" id="areas-grid">
+          <div class="area-card selected" onclick="toggleArea(this,'banco')" data-area="banco">
+            <i class="ti ti-building-bank"></i><div class="an">Banco</div><div class="ah">Nómina y comisiones</div>
+          </div>
+          <div class="area-card selected" onclick="toggleArea(this,'energia')" data-area="energia">
+            <i class="ti ti-bolt"></i><div class="an">Luz y gas</div><div class="ah">Tarifas de suministros</div>
+          </div>
+          <div class="area-card selected" onclick="toggleArea(this,'seguros')" data-area="seguros">
+            <i class="ti ti-shield"></i><div class="an">Seguros</div><div class="ah">Hogar, coche, vida</div>
+          </div>
+          <div class="area-card selected" onclick="toggleArea(this,'suscripciones')" data-area="suscripciones">
+            <i class="ti ti-device-tv"></i><div class="an">Suscripciones</div><div class="ah">Streaming y apps</div>
+          </div>
+          <div class="area-card" onclick="toggleArea(this,'telefonia')" data-area="telefonia">
+            <i class="ti ti-phone"></i><div class="an">Telefonía</div><div class="ah">Móvil y fibra</div>
+          </div>
+          <div class="area-card" onclick="toggleArea(this,'transporte')" data-area="transporte">
+            <i class="ti ti-car"></i><div class="an">Transporte</div><div class="ah">Carburante y abono</div>
+          </div>
+          <div class="area-card" onclick="toggleArea(this,'gimnasio')" data-area="gimnasio">
+            <i class="ti ti-barbell"></i><div class="an">Gimnasio</div><div class="ah">Cuotas recurrentes</div>
+          </div>
+          <div class="area-card" onclick="toggleArea(this,'compras')" data-area="compras">
+            <i class="ti ti-shopping-bag"></i><div class="an">Compras grandes</div><div class="ah">Pendientes</div>
+          </div>
+          <div class="area-card" onclick="toggleArea(this,'viajes')" data-area="viajes">
+            <i class="ti ti-plane"></i><div class="an">Viajes</div><div class="ah">Planificados</div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="startDiagnosis()">
+          <i class="ti ti-arrow-right"></i> Empezar diagnóstico
+        </button>
+      </div>
+    </div>
+
+    <div id="diag-form" style="display:none">
+      <div id="form-container"></div>
+      <div class="nav-row">
+        <button class="btn btn-sm" id="btn-prev" onclick="prevStep()" disabled>
+          <i class="ti ti-arrow-left"></i> Anterior
+        </button>
+        <span class="step-pill" id="step-pill">1 de 1</span>
+        <button class="btn btn-primary btn-sm" id="btn-next" onclick="nextStep()">
+          Siguiente <i class="ti ti-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="diag-result" style="display:none">
+      <div class="result-box">
+        <div class="result-eyebrow">Tu análisis personalizado</div>
+        <div id="result-content" class="result-content"></div>
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-sm" onclick="resetDiagnosis()"><i class="ti ti-refresh"></i> Nuevo diagnóstico</button>
+        <button class="btn btn-sm" id="copy-result-btn" style="display:none" onclick="copyResult()"><i class="ti ti-copy"></i> Copiar análisis</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ ESTRATEGIAS ═══════════════════ -->
+  <div class="panel" id="panel-estrategias">
+
+    <div class="card" style="margin-bottom:1rem">
+      <div class="card-title"><i class="ti ti-target"></i> Elige una categoría</div>
+      <div class="cat-pills" id="cat-pills">
+        <button class="cat-pill active" onclick="showStratCategory(this,'banco')"><i class="ti ti-building-bank"></i> Banco</button>
+        <button class="cat-pill" onclick="showStratCategory(this,'energia')"><i class="ti ti-bolt"></i> Luz y gas</button>
+        <button class="cat-pill" onclick="showStratCategory(this,'seguros')"><i class="ti ti-shield"></i> Seguros</button>
+        <button class="cat-pill" onclick="showStratCategory(this,'telefonia')"><i class="ti ti-phone"></i> Telefonía</button>
+        <button class="cat-pill" onclick="showStratCategory(this,'suscripciones')"><i class="ti ti-device-tv"></i> Suscripciones</button>
+        <button class="cat-pill" onclick="showStratCategory(this,'gimnasio')"><i class="ti ti-barbell"></i> Gimnasio</button>
+        <button class="cat-pill" onclick="showStratCategory(this,'viajes')"><i class="ti ti-plane"></i> Viajes</button>
+        <button class="cat-pill" onclick="showStratCategory(this,'compras')"><i class="ti ti-shopping-bag"></i> Compras grandes</button>
+      </div>
+    </div>
+
+    <div id="strat-content"></div>
+
+  </div>
+
+  <!-- ═══════════════════ CHECKLIST ═══════════════════ -->
+  <div class="panel" id="panel-checklist">
+
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="prog-label">0 de 6 completadas</span>
+        <strong id="prog-pct">0%</strong>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+
+    <div class="checklist" id="checklist">
+
+      <div class="check-item" data-saving="300">
+        <div class="checkbox" onclick="toggleCheck(this.parentElement)"><i class="ti ti-check" style="display:none"></i></div>
+        <div class="check-body">
+          <div class="check-title" onclick="toggleCheck(this.parentElement.parentElement)">Cambia o renegocia tu banco</div>
+          <div class="check-desc">Compara cuentas con bonificación por nómina. Muchos bancos ofrecen 200–500 € el primer año solo por domiciliar la nómina. Se puede hacer desde el móvil en 40 minutos.</div>
+        </div>
+        <div class="check-right">
+          <div class="saving-label">Ahorro real (€/año)</div>
+          <div class="saving-input-wrap">
+            <input type="number" class="saving-input" value="300" min="0" onclick="event.stopPropagation()" oninput="updateTotal()">
+            <span class="saving-currency">€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-item" data-saving="200">
+        <div class="checkbox" onclick="toggleCheck(this.parentElement)"><i class="ti ti-check" style="display:none"></i></div>
+        <div class="check-body">
+          <div class="check-title" onclick="toggleCheck(this.parentElement.parentElement)">Revisa tu tarifa de luz y gas</div>
+          <div class="check-desc">Usa el comparador oficial de la CNMC (gratuito). Introduce tu consumo y comprueba si hay una tarifa mejor. No intentes entender tu factura — está diseñada para ser opaca.</div>
+        </div>
+        <div class="check-right">
+          <div class="saving-label">Ahorro real (€/año)</div>
+          <div class="saving-input-wrap">
+            <input type="number" class="saving-input" value="200" min="0" onclick="event.stopPropagation()" oninput="updateTotal()">
+            <span class="saving-currency">€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-item" data-saving="160">
+        <div class="checkbox" onclick="toggleCheck(this.parentElement)"><i class="ti ti-check" style="display:none"></i></div>
+        <div class="check-body">
+          <div class="check-title" onclick="toggleCheck(this.parentElement.parentElement)">Compara tus seguros antes de renovar</div>
+          <div class="check-desc">Nunca dejes que un seguro se renueve sin mirar. Las aseguradoras cuentan con tu inercia. Avisa con un mes de antelación que te planteas irte — suelen bajar la prima ese mismo día.</div>
+        </div>
+        <div class="check-right">
+          <div class="saving-label">Ahorro real (€/año)</div>
+          <div class="saving-input-wrap">
+            <input type="number" class="saving-input" value="160" min="0" onclick="event.stopPropagation()" oninput="updateTotal()">
+            <span class="saving-currency">€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-item" data-saving="120">
+        <div class="checkbox" onclick="toggleCheck(this.parentElement)"><i class="ti ti-check" style="display:none"></i></div>
+        <div class="check-body">
+          <div class="check-title" onclick="toggleCheck(this.parentElement.parentElement)">Cancela las suscripciones zombi</div>
+          <div class="check-desc">Abre tu extracto del mes pasado. Busca todos los cargos recurrentes bajo 15 €/mes. Por cada uno pregúntate: ¿lo he usado en los últimos 30 días? Si no, cancela hoy.</div>
+        </div>
+        <div class="check-right">
+          <div class="saving-label">Ahorro real (€/año)</div>
+          <div class="saving-input-wrap">
+            <input type="number" class="saving-input" value="120" min="0" onclick="event.stopPropagation()" oninput="updateTotal()">
+            <span class="saving-currency">€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-item" data-saving="100">
+        <div class="checkbox" onclick="toggleCheck(this.parentElement)"><i class="ti ti-check" style="display:none"></i></div>
+        <div class="check-body">
+          <div class="check-title" onclick="toggleCheck(this.parentElement.parentElement)">Renegocia tu tarifa de móvil o fibra</div>
+          <div class="check-desc">Usa las estrategias de la pestaña anterior. La táctica de portabilidad parcial para paquetes es especialmente efectiva — llaman ellos con ofertas de hasta el 50% de descuento.</div>
+        </div>
+        <div class="check-right">
+          <div class="saving-label">Ahorro real (€/año)</div>
+          <div class="saving-input-wrap">
+            <input type="number" class="saving-input" value="100" min="0" onclick="event.stopPropagation()" oninput="updateTotal()">
+            <span class="saving-currency">€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="check-item" data-saving="0">
+        <div class="checkbox" onclick="toggleCheck(this.parentElement)"><i class="ti ti-check" style="display:none"></i></div>
+        <div class="check-body">
+          <div class="check-title" onclick="toggleCheck(this.parentElement.parentElement)">Pon un recordatorio para dentro de 11 meses</div>
+          <div class="check-desc">El mayor error no es no revisar. Es revisar una vez y olvidarlo. Bloquea ya esa fecha en el móvil — cuando llegue, vuelve aquí y repite el proceso.</div>
+        </div>
+        <div class="check-right">
+          <div class="saving-label">Recurrente</div>
+          <div class="saving-input-wrap">
+            <input type="number" class="saving-input" value="0" min="0" onclick="event.stopPropagation()" oninput="updateTotal()" placeholder="—">
+            <span class="saving-currency">€</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="total-card">
+      <div>
+        <div class="total-label">Ahorro real acumulado</div>
+        <div class="total-amount" id="total-amount">0 €</div>
+      </div>
+      <i class="ti ti-pig-money total-icon"></i>
+    </div>
+
+    <div class="celebrate" id="celebrate">
+      <i class="ti ti-trophy"></i>
+      <strong>Plan completado</strong>
+      <p>Ahora pon el recordatorio. Aquí nos vemos en 11 meses.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// KNOWLEDGE BASE — Estrategias por categoría
+// ═══════════════════════════════════════════════════
+const STRATEGIES = {
+  banco: {
+    label: 'Banco',
+    icon: 'ti-building-bank',
+    sections: [
+      {
+        title: 'Qué buscar',
+        icon: 'ti-eye',
+        tips: [
+          'Cuentas online sin comisiones: Openbank, MyInvestor, EVO Banco, BBVA Online, ING Direct y Revolut no cobran comisión de mantenimiento con condiciones mínimas.',
+          'Cuentas remuneradas: Trade Republic destaca actualmente como la referencia con una de las mejores remuneraciones del mercado. MyInvestor, Openbank y Pibank también ofrecen interés sobre el saldo — compara la TAE vigente antes de elegir.',
+          'Bonificaciones por nómina: Bankinter, BBVA, CaixaBank y Santander dan entre 200 y 500 € el primer año a cambio de domiciliar nómina y 2–3 recibos.',
+          'Bancos que cobran comisiones por no cumplir condiciones: si tu banco actual te cobra entre 5 y 15 €/mes sin darte nada a cambio, es la señal más clara de que debes moverte.'
+        ]
+      },
+      {
+        title: 'Cómo negociar o cambiar',
+        icon: 'ti-message',
+        tips: [
+          'Llama a retención y menciona una oferta concreta de la competencia. El departamento de retención tiene margen que atención al cliente no tiene.',
+          'Solicita la eliminación de comisiones de mantenimiento directamente — muchos bancos las eliminan sin que el cliente lo sepa si simplemente las pide.',
+          'El proceso de cambio de banco (portabilidad de recibos y nómina) está regulado y el banco nuevo se encarga de todo. Puede hacerse en menos de 48 horas.',
+          'Si tienes hipoteca en ese banco, negocia por separado: la bonificación hipotecaria no te obliga a quedarte con el resto de productos.'
+        ]
+      },
+      {
+        title: 'Errores frecuentes',
+        icon: 'ti-alert-triangle',
+        tips: [
+          'Creer que cambiar de banco es complicado: el proceso está estandarizado y los bancos nuevos gestionan el traspaso de domiciliaciones.',
+          'Comparar solo la TAE de la cuenta y no las comisiones ocultas: transferencias salientes, mantenimiento de tarjeta, consultas en cajeros de otras redes.',
+          'No revisar si el dinero parado en cuenta corriente podría estar en un fondo monetario o cuenta remunerada, donde puede generar entre un 2% y un 3,5% anual sin riesgo.'
+        ]
+      }
+    ]
+  },
+  energia: {
+    label: 'Luz y gas',
+    icon: 'ti-bolt',
+    sections: [
+      {
+        title: 'Qué buscar',
+        icon: 'ti-eye',
+        tips: [
+          'Usa el comparador oficial de la CNMC (cnmc.es/consumidores) — es gratuito, independiente y muestra todas las tarifas del mercado con tu consumo real.',
+          'PVPC vs tarifa fija: el PVPC es más barato en años de precios bajos, la tarifa fija protege contra subidas. En 2024-2025 las tarifas indexadas del mercado libre están siendo competitivas.',
+          'Discriminación horaria (tarifa 2.0TD): si teletrabajas o puedes concentrar consumos en horas valle (de 0h a 8h y fines de semana), puedes ahorrar entre un 20% y un 40% en el término de energía.',
+          'Revisa la potencia contratada: el 35% de los hogares españoles tiene más potencia de la que usa. Bajar de 5,75 kW a 4,6 kW puede ahorrar entre 80 y 120 €/año solo en término fijo.'
+        ]
+      },
+      {
+        title: 'Cómo negociar o cambiar',
+        icon: 'ti-message',
+        tips: [
+          'Cambiar de comercializadora es gratuito y tarda entre 2 y 5 días hábiles. No hay corte de luz. La distribuidora (la red) no cambia, solo quien te factura.',
+          'Llama a tu comercializadora actual con una oferta concreta de la competencia en mano. Es la táctica más efectiva para conseguir una mejora de tarifa sin cambiar.',
+          'Comercializadoras con buenas tarifas en 2024-2025: Octopus Energy, Holaluz, Plenitude (ENI), Factor Energía y Repsol Electricidad. Compara siempre en la CNMC antes de contratar.',
+          'Cambia también el gas si tienes: las comercializadoras de gas a menudo hacen paquetes ventajosos y el ahorro puede ser significativo si consumes más de 500 kWh/año.'
+        ]
+      },
+      {
+        title: 'Trucos que pocos aplican',
+        icon: 'ti-bulb',
+        tips: [
+          'Bono social eléctrico: si cumples alguno de los criterios (renta baja, familia numerosa, pensionistas, discapacidad) tienes derecho a descuentos de hasta el 65% en la factura.',
+          'Revisa las lecturas reales vs estimadas en tu factura: si llevas meses con lecturas estimadas y tu consumo real es menor, tienes derecho a reclamación y a que te reliquiden.',
+          'El autoconsumo solar en comunidades de vecinos está disponible desde 2023 con trámites simplificados — puede reducir la factura un 30-50% a largo plazo.'
+        ]
+      }
+    ]
+  },
+  seguros: {
+    label: 'Seguros',
+    icon: 'ti-shield',
+    sections: [
+      {
+        title: 'Qué revisar antes de renovar',
+        icon: 'ti-eye',
+        tips: [
+          'Revisa los capitales asegurados: muchos propietarios de automóviles tienen el seguro a todo riesgo con un vehículo ya amortizado. Bajar a terceros ampliado puede suponer un ahorro del 40-60%.',
+          'En seguros de hogar, comprueba si el capital de continente (estructura) y contenido (muebles, electrodomésticos) refleja la realidad actual — estar sobreasegurado es dinero tirado.',
+          'Analiza las coberturas complementarias que nunca usas: asistencia en viaje, rotura de cristales, defensa jurídica. Eliminando los que no necesitas puedes ahorrar 30-60 € anuales.',
+          'El seguro de vida vinculado a la hipoteca suele ser el más caro del mercado. Puedes contratar uno equivalente en otra aseguradora por hasta un 70% menos — el banco no puede obligarte a contratar el suyo.'
+        ]
+      },
+      {
+        title: 'Cómo negociar',
+        icon: 'ti-message',
+        tips: [
+          'Avisa con un mes de antelación a la fecha de renovación que te planteas dar la baja. Las aseguradoras tienen equipos de retención con margen para bajar entre un 15% y un 30%.',
+          'Usa comparadores como Rastreator, Acierto o Kelisto para obtener ofertas reales de la competencia — luego llévalas a tu aseguradora actual como palanca de negociación.',
+          'Agrupa seguros en la misma compañía: tener coche y hogar en la misma aseguradora da descuentos del 5% al 15% sobre cada póliza.',
+          'Si tienes varios años sin siniestros, reclama activamente la bonificación por no siniestralidad — muchas aseguradoras no la aplican automáticamente.'
+        ]
+      },
+      {
+        title: 'Fechas clave',
+        icon: 'ti-calendar',
+        tips: [
+          'El plazo legal para comunicar la no renovación es de 30 días antes del vencimiento. Envíalo por burofax o email certificado para tener constancia.',
+          'Si tu aseguradora subió la prima más de un 10% sin avisar con al menos dos meses de antelación, puedes rescindir el contrato de forma inmediata sin penalización.',
+          'Pon un recordatorio en el móvil 45 días antes de cada vencimiento — ese margen te da tiempo de comparar, negociar y actuar sin prisas.'
+        ]
+      }
+    ]
+  },
+  telefonia: {
+    label: 'Telefonía',
+    icon: 'ti-phone',
+    sections: [
+      {
+        title: 'La táctica más efectiva: portabilidad parcial',
+        icon: 'ti-star',
+        tips: [
+          'Si tienes un paquete convergente (fibra + móvil en la misma operadora), haz la portabilidad SOLO del móvil a un OMV barato como Digi (8 GB por 5 €) o Lebara.',
+          'Al detectar que el móvil principal del contrato está portando, el equipo de defensa de cartera interpreta que te vas — y llama con ofertas de hasta el 50% de descuento en el paquete completo para retenerte.',
+          'La clave es que no siempre saben que solo portas el móvil: ven un cliente de valor que se mueve y actúan. Es en esa llamada donde llega la oferta real, no cuando la pides directamente en atención al cliente.',
+          'Ten preparado un plan B por si no llaman en 48 horas: completar la portabilidad de todo a una operadora sin permanencia como Digi te permite ahorrar de todas formas, y volver en unos meses con una oferta de nuevo cliente cuando la original lance promociones.'
+        ]
+      },
+      {
+        title: 'Alternativas que pocos conocen',
+        icon: 'ti-eye',
+        tips: [
+          'Digi: fibra 1 Gb por 20 €/mes y móvil ilimitado por 10 €/mes. Es actualmente la referencia de precio más baja del mercado con buena cobertura en zonas urbanas.',
+          'MásMóvil, Pepephone, Simyo y Yoigo son OMV que usan las mismas redes que Movistar, Orange y Vodafone pero con precios un 30-50% menores.',
+          'La fibra de Movistar (FTTH) tiene la mejor calidad de red pero el precio más alto. Si no teletrabajas con videoconferencias constantes, una fibra de 300 Mb de un OMV es más que suficiente.',
+          'Revisa si tu tarifa de móvil tiene gigas que nunca usas — bajar de 50 GB a 20 GB puede suponer 8-15 €/mes de ahorro con la misma calidad de llamadas.'
+        ]
+      },
+      {
+        title: 'Cómo hacer la portabilidad',
+        icon: 'ti-transfer',
+        tips: [
+          'La portabilidad es gratuita y tarda entre 24 y 48 horas. Conservas tu número. Solo necesitas el DNI y el número de teléfono.',
+          'Contrata primero en la nueva operadora y ellos gestionan la baja en la actual. No canceles antes — perderías el número.',
+          'Si estás en permanencia, comprueba el coste de cancelación: en muchos casos el ahorro mensual amortiza la penalización en 2-3 meses.',
+          'El mejor momento para negociar con tu operadora actual es cuando recibes el SMS de confirmación de portabilidad — es entonces cuando el equipo de retención actúa.'
+        ]
+      }
+    ]
+  },
+  suscripciones: {
+    label: 'Suscripciones',
+    icon: 'ti-device-tv',
+    sections: [
+      {
+        title: 'Cómo auditar tus suscripciones',
+        icon: 'ti-eye',
+        tips: [
+          'Descarga el extracto bancario de los últimos 2 meses y filtra todos los cargos entre 1 y 30 €. Cada uno es una suscripción potencial que revisar.',
+          'Usa apps como Rocket Money (antes Truebill), Mint o simplemente una hoja de cálculo para mapear todos los cargos recurrentes de una vez.',
+          'El gasto medio en streaming por hogar español es de 286 €/año. Si tienes más de 3 plataformas, casi con total seguridad hay solapamiento de contenido.',
+          'Revisa también el email: busca "gracias por suscribirte", "tu factura" o "renovación" — es habitual encontrar suscripciones que se contrataron y olvidaron.'
+        ]
+      },
+      {
+        title: 'Estrategias de optimización',
+        icon: 'ti-bulb',
+        tips: [
+          'Rotación de plataformas: en lugar de tener Netflix + HBO + Disney+ activos a la vez, da de alta una, consume el contenido que te interesa en 1-2 meses y cambia. Mismo contenido, 60-70% menos de coste.',
+          'Aprovechar los planes familiares o compartidos: Netflix, Spotify y Apple One permiten hasta 5-6 usuarios. Compartir con personas de confianza reduce el coste unitario a la mitad.',
+          'Pagar anual en lugar de mensual: la mayoría de servicios ofrecen 1-2 meses gratis al pagar anualmente. Solo hazlo si estás seguro de que lo usarás todo el año.',
+          'Antes de cancelar, pide retención: Spotify, Adobe y muchos servicios ofrecen 1-3 meses gratis o descuentos del 50% cuando anuncias que quieres cancelar.'
+        ]
+      },
+      {
+        title: 'Las suscripciones más frecuentemente olvidadas',
+        icon: 'ti-alert-triangle',
+        tips: [
+          'Almacenamiento en la nube: iCloud, Google One y OneDrive se acumulan si tienes dispositivos de distintas marcas. Revisa si alguno puede consolidarse.',
+          'Pruebas gratuitas que se convierten en de pago: Amazon Prime, Adobe, antivirus, VPNs. Si no las usas activamente, cancela antes del cobro.',
+          'Apps de productividad o educación: Notion, Duolingo Plus, Headspace, LinkedIn Premium. Pregúntate si el uso justifica el coste mensual real.',
+          'Donaciones y membresías recurrentes: Wikipedia, Twitch, Patreon. No son malas, pero deben ser conscientes — no olvidadas.'
+        ]
+      }
+    ]
+  },
+  gimnasio: {
+    label: 'Gimnasio',
+    icon: 'ti-barbell',
+    sections: [
+      {
+        title: 'Cuándo tiene sentido y cuándo no',
+        icon: 'ti-eye',
+        tips: [
+          'Calcula el coste por visita real: divide la cuota mensual entre las veces que vas al mes. Si supera los 8-10 €/visita, merece la pena explorar alternativas.',
+          'Si vas menos de 8 veces al mes, un gimnasio de bajo coste (McFit, Altafit, VivaGym desde 15-20 €/mes) o la cuota municipal (suele estar entre 25 y 45 €/mes con piscina incluida) es una mejor opción.',
+          'Los gimnasios boutique y especializados (CrossFit, pilates, boxing) se justifican si la metodología o comunidad es el valor real — si solo los usas para máquinas, no tiene sentido.',
+          'La app Gyms Network permite acceder a cientos de gimnasios en distintas ciudades con una única suscripción — útil si viajas con frecuencia.'
+        ]
+      },
+      {
+        title: 'Cómo negociar la cuota',
+        icon: 'ti-message',
+        tips: [
+          'En enero y septiembre los gimnasios están en su punto más alto de demanda — es el peor momento para negociar. Febrero-marzo y julio-agosto son los meses con más margen.',
+          'Anuncia que te vas a dar de baja: la mayoría de cadenas ofrecen 1-2 meses gratis o descuentos del 20-30% para retener clientes con más de un año de antigüedad.',
+          'Paga anualmente en lugar de mensual: el descuento habitual es de 1-2 meses gratis, lo que equivale a un ahorro del 8-16%.',
+          'Pregunta por tarifas de empleado, tarifa reducida para horas valle (antes de las 16h o después de las 22h) o descuento por traer un amigo — muchos centros no los anuncian pero los tienen.'
+        ]
+      },
+      {
+        title: 'Alternativas de bajo coste',
+        icon: 'ti-bulb',
+        tips: [
+          'Gimnasios municipales: suelen costar entre 25 y 45 €/mes e incluyen piscina, sala de fitness y clases colectivas. La calidad del equipamiento ha mejorado mucho en los últimos años.',
+          'McFit, Altafit y Fitness Hut ofrecen acceso 24h por 15-25 €/mes. Sin clases, sin frills, solo máquinas — perfectos si sabes lo que haces.',
+          'Aplicaciones como Nike Training Club, FitBod o YouTube permiten entrenar en casa con equipamiento mínimo a coste cero.',
+          'Un juego de mancuernas ajustables y una kettlebell pueden reemplazar el 80% del uso real de un gimnasio de musculación. Se amortizan en pocos meses.'
+        ]
+      }
+    ]
+  },
+  viajes: {
+    label: 'Viajes',
+    icon: 'ti-plane',
+    sections: [
+      {
+        title: 'Cuándo y cómo buscar vuelos',
+        icon: 'ti-search',
+        tips: [
+          'Activa alertas de precio en Google Flights o Skyscanner para tu destino y fecha aproximada. Cuando el precio baja, te avisan — sin tener que estar mirando cada día.',
+          'Los vuelos suelen ser más baratos buscados con entre 6 y 8 semanas de antelación para destinos europeos, y 2-3 meses para vuelos de largo radio. Comprar con demasiada antelación tampoco garantiza el mejor precio.',
+          'Volar a aeropuertos secundarios cercanos al destino (Milán Bérgamo en lugar de Milán Malpensa, Girona en lugar de Barcelona) puede suponer un ahorro del 30-50% en el vuelo, aunque hay que considerar el coste y tiempo del traslado.',
+          'Separa la búsqueda de vuelos de la de hotel: los paquetes combinados raramente son la opción más barata. Compara siempre por separado.'
+        ]
+      },
+      {
+        title: 'Alojamiento: trucos que funcionan',
+        icon: 'ti-home',
+        tips: [
+          'Para estancias de más de 4 noches, los apartamentos de Airbnb, Booking o Vrbo suelen ser más baratos que un hotel de categoría equivalente, y dan más comodidad para organizar comidas.',
+          'Reserva hoteles con cancelación gratuita y sigue mirando el precio después de reservar: no es raro que baje y puedas cancelar y volver a reservar más barato.',
+          'Compara siempre el precio del hotel directamente en su web con el de los comparadores. Muchas cadenas garantizan el mejor precio directo y añaden beneficios (desayuno, upgrade) que los comparadores no ofrecen.',
+          'El check-in en domingo o lunes suele ser más barato que en viernes o sábado en destinos de ciudad. En destinos de playa o montaña ocurre al revés.'
+        ]
+      },
+      {
+        title: 'Gastos en destino',
+        icon: 'ti-wallet',
+        tips: [
+          'Usa una tarjeta sin comisión por uso en el extranjero para pagar y sacar dinero: Revolut, Wise o N26 eliminan las comisiones de cambio de divisa que los bancos tradicionales cobran (entre un 1,5% y un 3% por operación).',
+          'Compra los traslados del aeropuerto con antelación desde casa: el taxi en destino o los servicios del hotel suelen costar el doble que el transporte público o los shuttles reservados online.',
+          'Las tarjetas de transporte de ciudad (metro, autobús) para varios días son siempre más baratas que pagar por viaje. En muchas ciudades también incluyen descuentos en museos.',
+          'Compra las entradas a museos y atracciones principales online y con antelación: evitas colas y suele haber descuentos frente a la taquilla.'
+        ]
+      },
+      {
+        title: 'Seguros y coberturas que ya tienes',
+        icon: 'ti-shield-check',
+        tips: [
+          'Revisa si tu tarjeta de crédito o débito incluye seguro de viaje gratuito — muchas tarjetas Visa o Mastercard de gama media lo incorporan sin que el titular lo sepa.',
+          'Si tienes seguro de hogar, comprueba si cubre el equipaje en viaje: es una cobertura habitual que evita contratar un seguro de viaje adicional.',
+          'El seguro de cancelación solo tiene sentido si el viaje tiene un coste total alto y existen causas reales de cancelación probable. Para una escapada de fin de semana con vuelos baratos, el coste del seguro puede superar el riesgo.',
+          'Al pagar el vuelo con tarjeta de crédito, en muchos países tienes derecho a reclamación directamente al emisor de la tarjeta si la aerolínea cancela o no presta el servicio. Infórmate antes de viajar.'
+        ]
+      }
+    ]
+  },
+  compras: {
+    label: 'Compras grandes',
+    icon: 'ti-shopping-bag',
+    sections: [
+      {
+        title: 'El momento: cuándo comprar qué',
+        icon: 'ti-calendar',
+        tips: [
+          'Electrónica (móviles, portátiles, televisores): el mejor momento es cuando sale el modelo siguiente, no el Black Friday. El modelo anterior baja de precio de forma inmediata y sostenida. El Black Friday es útil para accesorios y periféricos.',
+          'Electrodomésticos grandes: enero y julio son los meses de liquidación de stock. Las tiendas físicas tienen más margen de negociación al final del mes, cuando cierran objetivos.',
+          'Ropa y calzado: las rebajas de enero y julio siguen siendo los mejores momentos. Los outlets online de marcas liquidan stock fuera de temporada con descuentos del 50-70%.',
+          'Muebles y decoración: enero y agosto son los meses con mayor stock de liquidación. IKEA, El Corte Inglés y las grandes superficies renuevan colecciones y rebajan el stock anterior.'
+        ]
+      },
+      {
+        title: 'Cómo comparar y no pagar de más',
+        icon: 'ti-eye',
+        tips: [
+          'Antes de comprar en Amazon, comprueba el historial de precios del producto con herramientas de seguimiento de precios. Un precio "rebajado" puede ser el precio habitual con el precio original inflado artificialmente.',
+          'Busca el mismo producto en al menos tres tiendas diferentes: tienda oficial del fabricante, Amazon, y una tienda especializada. El precio puede variar hasta un 20-30% por el mismo artículo.',
+          'En tiendas físicas de electrónica o electrodomésticos, preguntar "¿es el mejor precio que me puedes dar?" tiene una tasa de éxito alta — especialmente en tiendas independientes o al pagar en efectivo.',
+          'El reacondicionado certificado (official refurbished) del propio fabricante — Apple, Samsung, Dyson, etc. — ofrece la misma garantía que el nuevo con descuentos del 15-30%. Es distinto al reacondicionado de terceros.'
+        ]
+      },
+      {
+        title: 'Formas de pagar menos',
+        icon: 'ti-bulb',
+        tips: [
+          'El cashback funciona: plataformas como Rakuten o TopCashback devuelven entre un 1% y un 10% del importe en compras en cientos de tiendas. El proceso es instalar una extensión y activar el cashback antes de comprar.',
+          'Algunas tarjetas de crédito o cuentas bancarias incluyen descuentos o devolución de un porcentaje en compras en tiendas concretas. Revisa los beneficios de tus tarjetas — es dinero que se deja sobre la mesa.',
+          'Para artículos de segunda mano en buen estado (electrónica, muebles, bicicletas, equipamiento deportivo), Wallapop, Milanuncios y los grupos de Facebook de compraventa local ofrecen precios un 40-60% menores que el nuevo.',
+          'Si la compra es grande y no es urgente, espera. La paciencia es la mejor herramienta de ahorro: pon el artículo en la cesta de la tienda y deja pasar 48-72 horas. Muchas tiendas envían un descuento automático para recuperar el abandono de cesta.'
+        ]
+      },
+      {
+        title: 'Antes de comprar, pregúntate',
+        icon: 'ti-help-circle',
+        tips: [
+          '¿Lo necesito o lo quiero? No es un juicio moral — es una pregunta práctica. Si la respuesta es "lo quiero", está bien, pero presupuéstalo conscientemente en lugar de comprarlo por impulso.',
+          '¿Tengo ya algo que cumple la misma función? El coste real de una compra nueva incluye el espacio que ocupa y el objeto que desplaza. Vender lo antiguo antes de comprar lo nuevo es siempre mejor que acumular.',
+          '¿Cuánto me cuesta por uso real? Un artículo de 200 € que usas 200 veces al año cuesta 1 €/uso. Uno de 50 € que usas 5 veces cuesta 10 €/uso. El precio de compra no es el coste real.',
+          '¿Puedo alquilarlo, pedirlo prestado o encontrarlo de segunda mano? Para herramientas, equipamiento de deporte estacional o artículos de uso esporádico, comprar nuevo raramente tiene sentido.'
+        ]
+      }
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════════
+// AREA DEFINITIONS — Diagnóstico
+// ═══════════════════════════════════════════════════
+const AREAS = {
+  banco: { label:'Banco', icon:'ti-building-bank', fields:[
+    {id:'banco_nomina', label:'Nómina neta mensual (€)', type:'number', ph:'Ej. 1.800'},
+    {id:'banco_entidad', label:'Banco actual', type:'text', ph:'Ej. CaixaBank, BBVA, Santander...'},
+    {id:'banco_comisiones', label:'Comisiones que pagas al mes (€)', type:'number', ph:'Ej. 8 — escribe 0 si no pagas'},
+    {id:'banco_tipo', label:'Tipo de cuenta', type:'select', opts:['Cuenta corriente sin bonificación','Cuenta con bonificación nómina','Cuenta online sin comisiones','No lo sé']}
+  ]},
+  energia: { label:'Luz y gas', icon:'ti-bolt', fields:[
+    {id:'luz_factura', label:'Factura media de luz al mes (€)', type:'number', ph:'Ej. 65'},
+    {id:'luz_comercializadora', label:'Comercializadora de luz actual', type:'text', ph:'Ej. Endesa, Iberdrola, Naturgy...'},
+    {id:'gas_factura', label:'Factura media de gas al mes (€, 0 si no tienes)', type:'number', ph:'Ej. 30'},
+    {id:'energia_tarifa', label:'Tipo de tarifa', type:'select', opts:['PVPC (precio variable regulado)','Tarifa fija de comercializadora','No lo sé']},
+    {id:'energia_potencia', label:'¿Revisaste alguna vez la potencia contratada?', type:'select', opts:['Sí, está bien ajustada','No, nunca lo he mirado','Creo que tengo más de la que uso']}
+  ]},
+  seguros: { label:'Seguros', icon:'ti-shield', fields:[
+    {id:'seg_coche', label:'Prima anual seguro de coche (€, 0 si no tienes)', type:'number', ph:'Ej. 420'},
+    {id:'seg_coche_comp', label:'Aseguradora del coche', type:'text', ph:'Ej. Mapfre, Mutua, Allianz...'},
+    {id:'seg_hogar', label:'Prima anual seguro de hogar (€, 0 si no tienes)', type:'number', ph:'Ej. 180'},
+    {id:'seg_hogar_comp', label:'Aseguradora del hogar', type:'text', ph:'Ej. Zurich, AXA, Generali...'},
+    {id:'seg_otros', label:'Otros seguros al año: vida, salud, decesos (€)', type:'number', ph:'Ej. 300'},
+    {id:'seg_renueva', label:'¿Comparas precios antes de cada renovación?', type:'select', opts:['Sí, siempre','A veces','No, se renuevan solos','Nunca lo he hecho']}
+  ]},
+  suscripciones: { label:'Suscripciones', icon:'ti-device-tv', fields:[
+    {id:'sus_plataformas', label:'Plataformas de streaming activas', type:'text', ph:'Ej. Netflix, HBO Max, Disney+, Spotify...'},
+    {id:'sus_total', label:'Coste total mensual aproximado (€)', type:'number', ph:'Ej. 38'},
+    {id:'sus_frecuencia', label:'Frecuencia de uso real', type:'select', opts:['Uso casi todas cada semana','Uso la mitad regularmente','Solo uso una o dos','La verdad, pocas']},
+    {id:'sus_otros', label:'Otras cuotas pequeñas (apps, cloud, etc.)', type:'text', ph:'Ej. iCloud 2,99€/mes, LinkedIn 30€/mes'}
+  ]},
+  telefonia: { label:'Telefonía', icon:'ti-phone', fields:[
+    {id:'tel_operadora', label:'Operadora actual', type:'text', ph:'Ej. Movistar, Orange, Vodafone...'},
+    {id:'tel_movil', label:'Coste mensual móvil (€)', type:'number', ph:'Ej. 25'},
+    {id:'tel_fibra', label:'Coste mensual fibra (€)', type:'number', ph:'Ej. 40'},
+    {id:'tel_paquete', label:'¿Tienes paquete convergente (móvil + fibra juntos)?', type:'select', opts:['Sí, todo con la misma operadora','No, los tengo separados','Solo tengo móvil']},
+    {id:'tel_permanencia', label:'¿Estás en período de permanencia?', type:'select', opts:['No, estoy libre','Sí, termina pronto','Sí, me queda más de un año','No lo sé']}
+  ]},
+  transporte: { label:'Transporte', icon:'ti-car', fields:[
+    {id:'trans_combustible', label:'Gasto mensual en combustible (€)', type:'number', ph:'Ej. 90'},
+    {id:'trans_publico', label:'Transporte público mensual (€)', type:'number', ph:'Ej. 40'},
+    {id:'trans_parking', label:'Parking mensual (€, 0 si no aplica)', type:'number', ph:'Ej. 80'},
+    {id:'trans_nota', label:'¿Hay algo que quieras optimizar?', type:'text', ph:'Ej. analizo si me conviene el tren, busco alternativas al parking...'}
+  ]},
+  gimnasio: { label:'Gimnasio', icon:'ti-barbell', fields:[
+    {id:'gym_nombre', label:'Nombre del gimnasio o cadena', type:'text', ph:'Ej. Holmes Place, VivaGym, Municipal...'},
+    {id:'gym_cuota', label:'Cuota mensual (€)', type:'number', ph:'Ej. 40'},
+    {id:'gym_uso', label:'Veces por semana que vas de media', type:'select', opts:['4 o más veces','2 o 3 veces','1 vez','Menos de una vez']},
+    {id:'gym_tiempo', label:'Tiempo en el mismo centro', type:'select', opts:['Menos de 1 año','Entre 1 y 3 años','Más de 3 años']}
+  ]},
+  compras: { label:'Compras grandes', icon:'ti-shopping-bag', fields:[
+    {id:'comp_que', label:'¿Qué compra tienes en mente?', type:'text', ph:'Ej. móvil nuevo, portátil, sofá...'},
+    {id:'comp_presupuesto', label:'Presupuesto máximo (€)', type:'number', ph:'Ej. 800'},
+    {id:'comp_urgencia', label:'¿Cuándo lo necesitas?', type:'select', opts:['Este mes','En los próximos 1-3 meses','Sin prisa, en el mejor momento']},
+    {id:'comp_contexto', label:'Contexto adicional', type:'text', ph:'Ej. lo necesito para trabajo, podría esperar a rebajas...'}
+  ]},
+  viajes: { label:'Viajes', icon:'ti-plane', fields:[
+    {id:'viaje_destino', label:'¿Adónde quieres ir?', type:'text', ph:'Ej. Lisboa, Canarias, Roma...'},
+    {id:'viaje_presupuesto', label:'Presupuesto total (€)', type:'number', ph:'Ej. 700'},
+    {id:'viaje_cuando', label:'¿Cuándo aproximadamente?', type:'text', ph:'Ej. verano, septiembre, sin fecha fija'},
+    {id:'viaje_tipo', label:'Tipo de viaje', type:'select', opts:['Escapada de fin de semana','Semana completa','Más de una semana','Aún no lo tengo claro']}
+  ]}
+};
+
+// ═══════════════════════════════════════════════════
+// ESTADO GLOBAL
+// ═══════════════════════════════════════════════════
+let selectedAreas = ['banco','energia','seguros','suscripciones'];
+let currentStep = 0;
+let formData = {};
+let analysisText = '';
+let currentStratCategory = 'banco';
+let darkMode = false;
+
+document.querySelectorAll('.area-card').forEach(c => {
+  if(selectedAreas.includes(c.dataset.area)) c.classList.add('selected');
+});
+
+// ═══════════════════════════════════════════════════
+// DIAGNÓSTICO
+// ═══════════════════════════════════════════════════
+function toggleArea(el, area) {
+  el.classList.toggle('selected');
+  selectedAreas = el.classList.contains('selected')
+    ? [...selectedAreas, area]
+    : selectedAreas.filter(a => a !== area);
+}
+
+function startDiagnosis() {
+  if(!selectedAreas.length) { alert('Selecciona al menos un área.'); return; }
+  currentStep = 0; formData = {};
+  document.getElementById('diag-selector').style.display = 'none';
+  document.getElementById('diag-form').style.display = 'block';
+  renderStep();
+}
+
+function renderStep() {
+  const area = selectedAreas[currentStep];
+  const def = AREAS[area];
+  let html = `<div class="card"><div class="card-title"><i class="ti ${def.icon}"></i> ${def.label}</div>`;
+  def.fields.forEach(f => {
+    html += `<div class="field"><div class="field-label">${f.label}</div>`;
+    if(f.type === 'select') {
+      html += `<select id="f_${f.id}"><option value="">— elige una opción —</option>`;
+      f.opts.forEach(o => html += `<option>${o}</option>`);
+      html += `</select>`;
+    } else {
+      html += `<input type="${f.type}" id="f_${f.id}" placeholder="${f.ph||''}">`;
+    }
+    html += `</div>`;
+  });
+  html += `</div>`;
+  document.getElementById('form-container').innerHTML = html;
+  document.getElementById('step-pill').textContent = `${currentStep+1} de ${selectedAreas.length}`;
+  document.getElementById('btn-prev').disabled = currentStep === 0;
+  const isLast = currentStep === selectedAreas.length - 1;
+  document.getElementById('btn-next').innerHTML = isLast
+    ? '<i class="ti ti-wand"></i> Analizar'
+    : 'Siguiente <i class="ti ti-arrow-right"></i>';
+}
+
+function collectStep() {
+  const area = selectedAreas[currentStep];
+  const def = AREAS[area];
+  formData[area] = formData[area] || {};
+  def.fields.forEach(f => {
+    const el = document.getElementById(`f_${f.id}`);
+    if(el) formData[area][f.label] = el.value || 'no indicado';
+  });
+}
+
+function nextStep() { collectStep(); currentStep < selectedAreas.length-1 ? (currentStep++, renderStep()) : runAnalysis(); }
+function prevStep() { collectStep(); currentStep > 0 && (currentStep--, renderStep()); }
+
+async function runAnalysis() {
+  document.getElementById('diag-form').style.display = 'none';
+  document.getElementById('diag-result').style.display = 'block';
+  document.getElementById('copy-result-btn').style.display = 'none';
+  const rc = document.getElementById('result-content');
+  rc.innerHTML = '<div class="loading-state"><div class="dots"><span></span><span></span><span></span></div> Analizando tu situación...</div>';
+
+  let dataStr = '';
+  for(const [area, vals] of Object.entries(formData)) {
+    dataStr += `\n\n### ${AREAS[area]?.label || area}\n`;
+    for(const [k,v] of Object.entries(vals)) dataStr += `- ${k}: ${v}\n`;
+  }
+
+  const prompt = `Eres un asesor de ahorro doméstico para hogares en España. Analiza estos datos y da un informe de oportunidades de ahorro concreto y personalizado.
+
+DATOS:${dataStr}
+
+FORMATO DE RESPUESTA — usa exactamente esta estructura para cada área:
+
+**[NOMBRE DEL ÁREA]**
+Situación: [una frase sobre lo que ves, mencionando la entidad/compañía si se ha indicado]
+Acción concreta: [qué hacer esta semana, específico — si conoces la entidad, menciona alternativas reales]
+Ahorro estimado: [rango realista en €/año para España 2024-2025]
+
+Al final, añade:
+
+**RESUMEN**
+Ahorro total estimado: [X – Y €/año]
+Primera acción: [la más impactante esta semana]
+Tiempo estimado: [minutos/horas para completar todo]
+
+Reglas: directo, sin tecnicismos, datos realistas para España. Si conoces la entidad/compañía mencionada, úsala para dar consejos más concretos. Sin introducciones ni despedidas. No menciones años concretos como 2024 o 2025.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:1500, messages:[{role:'user',content:prompt}] })
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.error.message);
+    analysisText = data.content?.filter(b=>b.type==='text').map(b=>b.text).join('') || '';
+    rc.innerHTML = formatAnalysis(analysisText);
+    document.getElementById('copy-result-btn').style.display = 'inline-flex';
+  } catch(e) {
+    rc.innerHTML = `<div style="color:var(--accent-text)"><i class="ti ti-alert-circle"></i> Error al conectar. Comprueba tu conexión e inténtalo de nuevo.</div>`;
+  }
+}
+
+function formatAnalysis(text) {
+  const blocks = text.split(/\n\n(?=\*\*)/);
+  return blocks.map(block => {
+    const titleMatch = block.match(/^\*\*(.+?)\*\*/);
+    if(!titleMatch) return `<div class="area-block"><p>${block.replace(/\n/g,'<br>')}</p></div>`;
+    const title = titleMatch[1];
+    const body = block.replace(/^\*\*.+?\*\*\n?/, '');
+    const lines = body.trim().split('\n').filter(Boolean).map(l => {
+      const m = l.match(/^([^:]+?):\s*(.+)/);
+      if(m) return `<div class="line"><span class="line-label">${m[1]}:</span> ${m[2]}</div>`;
+      return `<div class="line">${l}</div>`;
+    }).join('');
+    return `<div class="area-block"><div class="area-heading">${title}</div>${lines}</div>`;
+  }).join('');
+}
+
+function resetDiagnosis() {
+  formData={}; currentStep=0; analysisText='';
+  selectedAreas=['banco','energia','seguros','suscripciones'];
+  document.querySelectorAll('.area-card').forEach(c => {
+    c.classList.toggle('selected', selectedAreas.includes(c.dataset.area));
+  });
+  document.getElementById('diag-selector').style.display='block';
+  document.getElementById('diag-form').style.display='none';
+  document.getElementById('diag-result').style.display='none';
+}
+
+function copyResult() {
+  if(!analysisText) return;
+  navigator.clipboard.writeText(analysisText).then(() => {
+    const btn = document.getElementById('copy-result-btn');
+    btn.innerHTML = '<i class="ti ti-check"></i> Copiado';
+    setTimeout(() => btn.innerHTML = '<i class="ti ti-copy"></i> Copiar análisis', 2200);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// ESTRATEGIAS
+// ═══════════════════════════════════════════════════
+function showStratCategory(btn, cat) {
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  currentStratCategory = cat;
+  renderStrategy(cat);
+}
+
+function renderStrategy(cat) {
+  const s = STRATEGIES[cat];
+  if(!s) return;
+
+  let sectionsHTML = s.sections.map(sec => {
+    const tipsHTML = sec.tips.map((tip, i) =>
+      `<li class="strat-tip"><span class="strat-tip-num">${i+1}</span><span>${tip}</span></li>`
+    ).join('');
+    return `
+      <div class="strat-section">
+        <div class="strat-section-title"><i class="ti ${sec.icon}"></i>${sec.title}</div>
+        <ul class="strat-tips">${tipsHTML}</ul>
+      </div>`;
+  }).join('<div class="strat-divider"></div>');
+
+  const html = `
+    <div class="strat-output">
+      <div class="strat-header">
+        <div class="strat-header-title"><i class="ti ${s.icon}"></i>${s.label} — Estrategias de ahorro</div>
+      </div>
+      <div class="strat-body">
+        ${sectionsHTML}
+        <div class="strat-divider"></div>
+        <div class="strat-context-label">¿Quieres consejos personalizados para tu situación concreta?</div>
+        <div class="strat-context-fields">
+          <div class="field">
+            <div class="field-label">Tu compañía actual</div>
+            <input type="text" id="strat-empresa" placeholder="Ej. Movistar, Mapfre, Endesa...">
+          </div>
+          <div class="field">
+            <div class="field-label">Lo que pagas al mes (€)</div>
+            <input type="number" id="strat-precio" placeholder="Ej. 45" min="0">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="enrichStrategy()">
+          <i class="ti ti-wand"></i> Personalizar consejos con IA
+        </button>
+        <div class="ai-enrich-box" id="ai-enrich-box" style="display:none">
+          <div class="ai-enrich-label"><i class="ti ti-robot"></i> Análisis personalizado</div>
+          <div class="ai-enrich-content" id="ai-enrich-content"></div>
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById('strat-content').innerHTML = html;
+}
+
+async function enrichStrategy() {
+  const empresa = document.getElementById('strat-empresa')?.value.trim();
+  const precio = document.getElementById('strat-precio')?.value;
+  const box = document.getElementById('ai-enrich-box');
+  const content = document.getElementById('ai-enrich-content');
+  box.style.display = 'block';
+  content.innerHTML = '<div class="loading-state"><div class="dots"><span></span><span></span><span></span></div> Personalizando...</div>';
+
+  const s = STRATEGIES[currentStratCategory];
+  const empresaStr = empresa ? `La compañía actual del usuario es: ${empresa}.` : '';
+  const precioStr = precio ? `El usuario paga actualmente ${precio} €/mes.` : '';
+
+  const prompt = `Eres un asesor de ahorro doméstico para España. El usuario quiere optimizar su gasto en: ${s.label}.
+${empresaStr} ${precioStr}
+
+Dame 3-4 consejos MUY concretos y personalizados para esta situación específica. Ten en cuenta:
+- Si conoces la compañía mencionada, cita alternativas reales y concretas que existen en España
+- Indica el ahorro estimado realista en euros
+- Menciona el paso exacto siguiente que debe dar esta semana
+- Sé directo, sin rodeos, sin introducciones
+
+Formato: cada consejo en un párrafo corto empezando con un verbo de acción. Sin listas con viñetas.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:600, messages:[{role:'user',content:prompt}] })
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.error.message);
+    content.textContent = data.content?.filter(b=>b.type==='text').map(b=>b.text).join('') || 'Sin respuesta.';
+  } catch(e) {
+    content.textContent = 'Error al conectar. Inténtalo de nuevo.';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// CHECKLIST
+// ═══════════════════════════════════════════════════
+function toggleCheck(item) {
+  item.classList.toggle('done');
+  item.querySelector('.checkbox i').style.display = item.classList.contains('done') ? 'inline' : 'none';
+  updateTotal();
+}
+
+function updateTotal() {
+  const items = document.querySelectorAll('.check-item');
+  let done = 0; let total = 0;
+  items.forEach(item => {
+    if(item.classList.contains('done')) done++;
+    const input = item.querySelector('.saving-input');
+    const val = parseFloat(input?.value) || 0;
+    total += val;
+  });
+  const pct = Math.round((done / items.length) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `${done} de ${items.length} completadas`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('total-amount').textContent = total > 0
+    ? total.toLocaleString('es-ES', {minimumFractionDigits:0, maximumFractionDigits:0}) + ' €'
+    : '0 €';
+  document.getElementById('celebrate').style.display = done === items.length ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════════
+// NAVEGACIÓN Y TEMA
+// ═══════════════════════════════════════════════════
+function switchTab(name) {
+  ['diagnostico','estrategias','checklist'].forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle('active', t===name);
+    document.getElementById(`panel-${t}`).classList.toggle('active', t===name);
+  });
+}
+
+function toggleDark() {
+  darkMode = !darkMode;
+  document.body.classList.toggle('dark', darkMode);
+  document.getElementById('theme-icon').className = darkMode ? 'ti ti-sun' : 'ti ti-moon';
+}
+
+// ═══════════════════════════════════════════════════
+// INIT — ejecutar una vez el DOM está listo
+// ═══════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderStrategy('banco');
+});
+</script>
+</body>
+</html>
